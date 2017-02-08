@@ -7,16 +7,34 @@
 </head>
 <body>
 <canvas id="c"></canvas>
+<input type="color" name="favcolor" value="#ff0000" id="colorPick">
 <div style="margin: 20px;" id="base64"></div>
 <script>
     var url = 'http://128.199.158.124/cat.jpg.php';
     var canvas = new fabric.Canvas('c');
+    canvas.width = 600;
+    canvas.height = 300;
     fabricHelper.getImageFromUrl(url, function (img) {
+//        img.setWidth('15');
+//        img.setHeight('15');
         canvas.add(img);
         document.getElementById("base64").innerHTML = canvas.toDataURL();
     }, function (e, ee) {
         console.error(e, ee)
     });
+
+    document.getElementById("colorPick").addEventListener("change", function () {
+        var obj = canvas.getActiveObject();
+        obj.filters[1] = createMultiplyFilter(this.value);
+        obj.applyFilters(canvas.renderAll.bind(canvas));
+    });
+
+    function createMultiplyFilter(color) {
+        return new fabric.Image.filters.Multiply({
+            color: color
+        });
+    }
+
 </script>
 </body>
 </html>
