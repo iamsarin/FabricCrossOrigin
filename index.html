@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="fabric.min.js"></script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div style="margin: 20px;" id="base64"></div>
+<script>
+    var canvas = new fabric.Canvas('c');
+    canvas.setDimensions({
+        width: 600,
+        height: 600
+    });
+    canvas.setBackgroundImage('http://128.199.158.124/maxresdefault.jpg.php', function () {
+        canvas.renderAll();
+        fabric.Image.fromURL('https://lh6.googleusercontent.com/-nI_6EJ8gyDU/AAAAAAAAAAI/AAAAAAABQz4/uQHZE0iWnYs/s120-c/photo.jpg', function (img) {
+            img.set({width: 50, height: 50, left: 15, top: 15});
+            canvas.add(img);
+            document.getElementById("base64").innerHTML = JSON.stringify(canvas.toDataURL());
+        }, {
+            crossOrigin: 'anonymous'
+        });
+    }, {
+        left: 0,
+        top: 0,
+        originX: 'left',
+        originY: 'top',
+        crossOrigin: 'anonymous'
+    });
+
+
+</script>
+</body>
+</html>
